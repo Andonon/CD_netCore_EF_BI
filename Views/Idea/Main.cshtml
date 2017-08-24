@@ -1,0 +1,34 @@
+@{
+    ViewData["Title"] = "Idea Page";
+}
+<h1 id="header">Bright Ideas</h1>
+<p id="logout"><a asp-action="logout" asp-controller="Login">Log Out</a></p>
+<div id="useralias"><p>Hello @ViewBag.CurrUserAlias.</p></div>
+<div id=errormessages>
+    @if (ViewBag.message != null)
+    {
+        <p>@ViewBag.message</p>
+    }
+</div>
+<div id="asp_idea_validations" asp-validation-summary="All"></div>
+<div id="IdeaForm">
+    <form action="CreateIdea" method="post">
+        <textarea name="Idea" id="Idea" cols="50" rows="1" placeholder="Post something witty here..."></textarea>
+        <input type="submit" value="Save Idea!">
+    </form>
+</div>
+<div>
+    <table> 
+        <tr> 
+            <th>Created By</th>
+            <th>Idea</th>
+        </tr>
+        @foreach(var idea in ViewBag.AllIdeas)
+        {
+            <tr>
+                    <td>@idea.CreatedBy</td>
+                    <td>@idea.Idea</td>
+            </tr>
+        }
+    </table>
+</div>

@@ -1,0 +1,51 @@
+@model brightideas.Models.RegisterViewModel
+@{
+    ViewData["Title"] = "Home Page";
+}
+<h1 id="header">Bright Ideas</h1>
+<p id="logout"><a asp-action="logout" asp-controller="Login">Log Out</a></p>
+<div id=errormessages>
+    @if (ViewBag.message != null)
+    {
+        <p>@ViewBag.message</p>
+    }
+</div>
+<div id="loginarea">
+    <div id="register">
+        <h3>Register</h3>
+        <p>Fill out this form to register as a new user</p>
+        <div id="asp_register_validations" asp-validation-summary="All"></div>
+        <div id="registerlables">
+            <label for="Name">Name</label><br><br>
+            <label for="Alias">Alias</label><br><br>
+            <label for="Email">Email</label><br><br>
+            <label for="Password">Password</label><br><br>
+            <label for="CPassword">Confirm Password</label>
+        </div>
+        <div id="registerfields">
+            <form id="registerform" action="register" method="post">
+                <input id="Name" asp-for="Name"><br><br>
+                <input id="Alias" asp-for="Alias"><br><br>
+                <input id="Email" asp-for="Email"><br><br>
+                <input type="password" id="Password" asp-for="Password"><br><br>
+                <input type="password" id="CPassword" asp-for="CPassword"><br><br><br>
+                <input type="submit" name="register" value="Register">
+            </form>
+        </div>
+    </div>
+    <div id="login">
+        <h3>Login</h3>            
+        <p>If you have a login, login here</p>
+        <div id="loginlabels">
+            <label for="Email">Email</label><br><br>
+            <label for="Password">Password</label>
+        </div>
+        <div id="loginfields">
+            <form id="loginform" action="login" method="post">
+                <input type="text" id="Email" name="LoginEmail"><br><br>
+                <input type="password" id="Password" name="LoginPassword"><br><br><br>
+                <input type="submit" name="login" value="Login">
+            </form>
+        </div>
+    </div>
+</div>

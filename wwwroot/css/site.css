@@ -1,0 +1,70 @@
+/*Write all of your CSS here*/
+#header {
+    display: inline-block;
+    width: 500px;
+}
+#logout {
+    display: inline-block;
+    width: 200px;
+}
+#loginarea {
+    width: 100%;
+}
+#register {
+    display: inline-block;
+    width: 45%;
+    margin: auto;
+    vertical-align: top;
+}
+#registerlables {
+    display: inline-block;
+    vertical-align: top;
+    
+}
+#registerfields {
+    display: inline-block;
+}
+#login {
+    display: inline-block;
+    width: 45%;
+    margin: auto;
+}
+#loginlabels { 
+    display: inline-block;
+    vertical-align: top;
+    
+}
+#loginfields {
+    display: inline-block;
+}
+#errormessages #asp_register_validations {
+    font-size: .9em;
+    color: red;
+    font-weight: bold;
+}
+
+th, td {
+    border-bottom: 1px solid #ddd;
+    width: 100px;
+}
+tr:nth-child(even) {
+    background-color: #f2f2f2
+}
+#addwedding{
+    position: relative;
+    top: 100px; 
+    left: 500px;
+    box-shadow: 3px 3px 3px grey;
+}
+#newweddingform {
+    width: 900px;
+}
+#newweddinglables {
+    width: 150px; 
+    display: inline-block;
+}
+#newweddingfields {
+    width: 300px; 
+    display: inline-block;
+    vertical-align: top;
+}
