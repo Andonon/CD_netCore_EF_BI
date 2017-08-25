@@ -4,6 +4,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Http;
 using brightideas.Models;
+using Microsoft.EntityFrameworkCore;
 using System.Linq;
 
 namespace brightideas.Controllers
@@ -16,9 +17,9 @@ namespace brightideas.Controllers
         // DB Connection settings. 
         //==================================================================================
         
-        private ideasContext _context; 
+        private IdeaContext _context; 
 
-        public IdeaController(ideasContext context)
+        public IdeaController(IdeaContext context)
         {
             _context = context;
         }
@@ -32,28 +33,25 @@ namespace brightideas.Controllers
         public IActionResult Main()
         {
             int? UserId = HttpContext.Session.GetInt32("UserId");
-            if (UserId != null)
+            
+            if (UserId == null)
+            {
+                return RedirectToAction("Index", "Login");
+            }
+            else
             {
                 string CurrUserAlias = HttpContext.Session.GetString("UserAlias");
                 ViewBag.CurrUserAlias = CurrUserAlias;
 
-
-                //get all ideas here and display is descending order by number of likes.. 
-                List<users> ReturnedUsers = _context.users.ToList();
-                List<ideas> ReturnedIdeas = _context.ideas.ToList();
-                ViewBag.AllUsers = ReturnedUsers;
-                ViewBag.AllIdeas = ReturnedIdeas;
-                //get all likes here and display the likes for each post. 
-
-
-
+                List<Idea> ReturnedIdeas = _context.Ideas
+                    .Include( x => x.CreatedBy )
+                    .Include( y => y.Likes)
+                    .ToList();
                 return View();
             }
-            else
-            {
-                return RedirectToAction("Index", "Login");
-            }
         }
+        
+        
 
         //==================================================================================
         // Create Idea Route.
@@ -66,10 +64,10 @@ namespace brightideas.Controllers
             int? UserId = HttpContext.Session.GetInt32("UserId");
             if (UserId != null)
             {
-                ideas NewIdea = new ideas
+                Idea NewIdea = new Idea
                 {
-                    Idea = model.Idea,
-                    CreatedBy = UserId,
+                    IdeaText = model.IdeaText,
+                    CreatedById = (int)UserId,
                     CreatedAt = DateTime.Now,
                     UpdatedAt = DateTime.Now,
                 };

@@ -26,8 +26,8 @@ namespace brightideas
         public void ConfigureServices(IServiceCollection services)
         {
             // Add framework services.
-            services.AddDbContext<usersContext>(options => options.UseMySQL(Configuration["DBInfo:ConnectionString"]));
-            services.AddDbContext<ideasContext>(options => options.UseMySQL(Configuration["DBInfo:ConnectionString"]));
+            services.AddDbContext<UserContext>(options => options.UseMySQL(Configuration["DBInfo:ConnectionString"]));
+            services.AddDbContext<IdeaContext>(options => options.UseMySQL(Configuration["DBInfo:ConnectionString"]));
             services.AddMvc();
             services.AddSession();
         }

@@ -37,7 +37,7 @@
 #loginfields {
     display: inline-block;
 }
-#errormessages #asp_register_validations {
+#errormessages, #asp_register_validations {
     font-size: .9em;
     color: red;
     font-weight: bold;

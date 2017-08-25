@@ -22,13 +22,21 @@
         <tr> 
             <th>Created By</th>
             <th>Idea</th>
+            <th>Likes</th>
+            <th>Action</th>
         </tr>
-        @foreach(var idea in ViewBag.AllIdeas)
+        @if(ViewBag.Ideas != null)
         {
-            <tr>
+            @foreach(var idea in ViewBag.Ideas)
+            {
+                <tr>
                     <td>@idea.CreatedBy</td>
                     <td>@idea.Idea</td>
-            </tr>
+                    <td>@idea.Likes</td>
+                    <td>
+                    </td>
+                </tr>
+            }
         }
     </table>
 </div>

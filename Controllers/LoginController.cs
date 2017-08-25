@@ -14,9 +14,9 @@ namespace brightideas.Controllers
         // DB Connection settings. 
         //==================================================================================
         
-        private usersContext _context; 
+        private UserContext _context; 
 
-        public LoginController(usersContext context)
+        public LoginController(UserContext context)
         {
             _context = context;
         }
@@ -50,7 +50,7 @@ namespace brightideas.Controllers
         {
             if(ModelState.IsValid)
             {
-                users ExistingUser = _context.users.SingleOrDefault(users => users.Email == model.Email);
+                User ExistingUser = _context.Users.SingleOrDefault(Users => Users.Email == model.Email);
                     if(ExistingUser != null)
                     {
                         // Console.WriteLine("Found User exists");
@@ -58,7 +58,7 @@ namespace brightideas.Controllers
                         return View("Index", model);
                     };
 
-                users NewUser = new users
+                User NewUser = new User
                 {
                     Name = model.Name,
                     Alias = model.Alias,
@@ -69,10 +69,14 @@ namespace brightideas.Controllers
                 };
                 _context.Add(NewUser);
                 _context.SaveChanges();
-                NewUser = _context.users.SingleOrDefault(users => users.Email == NewUser.Email);
-                HttpContext.Session.SetInt32("UserId", NewUser.Id);
+                
+                NewUser = _context.Users.SingleOrDefault(Users => Users.Email == NewUser.Email);
+                
+                HttpContext.Session.SetInt32("UserId", NewUser.UserId);
                 HttpContext.Session.SetString("UserAlias", NewUser.Alias);
+                
                 ViewBag.CurrUserAlias = HttpContext.Session.GetString(NewUser.Alias);
+                
                 return RedirectToAction("Main", "Idea");
             }
             else{
@@ -88,7 +92,7 @@ namespace brightideas.Controllers
         [Route("login")]
         public IActionResult Login(string loginemail, string loginpassword)
         {
-            users FoundUser = _context.users.SingleOrDefault(users => users.Email == loginemail && users.Password == loginpassword);
+            User FoundUser = _context.Users.SingleOrDefault(Users => Users.Email == loginemail && Users.Password == loginpassword);
             if (FoundUser == null)
             {
                 ViewBag.Message = "Login failed.";
@@ -96,7 +100,7 @@ namespace brightideas.Controllers
             }
             else
             {
-                HttpContext.Session.SetInt32("UserId", FoundUser.Id);
+                HttpContext.Session.SetInt32("UserId", FoundUser.UserId);
                 HttpContext.Session.SetString("UserAlias", FoundUser.Alias);
                 return RedirectToAction("Main", "Idea");
             }
